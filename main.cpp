@@ -2,6 +2,7 @@
 #include <list>
 #include <iostream>
 #include "liste.h"
+#include "liste.cc"
 
 using namespace std;
 
@@ -28,14 +29,14 @@ int main() {
     for (pos = personnel.begin(); pos != personnel.end(); pos++)
         cout << *pos << endl;*/
 
-    Liste lst;
+    Liste<string> lst;
 
     lst.ajouter("Baleze Bruno");
     lst.ajouter("Costaud Claude");
     lst.ajouter("Doue Damien");
     lst.ajouter("Vaillant Veronique");
 
-    Iterateur pos;
+    Iterateur<string> pos;
 
     cout << "----------------\nListe de départ\n----------------" << endl;
 

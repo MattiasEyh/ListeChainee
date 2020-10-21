@@ -2,78 +2,72 @@
 
 using namespace std;
 
+template<typename T>
 class Element {
 public:
-   // constructeur
-   Element(const string& s);
+    // constructeur
+    Element<T>(const T &s);
 
 private:
-   string valeur;
+    T valeur;
 
-   // pointeurs vers les voisins
-   Element* precedent;
-   Element* suivant;
+    // pointeurs vers les voisins
+    Element<T> *precedent;
+    Element<T> *suivant;
 
-friend class Liste;
-friend class Iterateur;
+    friend class Liste<T>;
+
+    friend class Iterateur<T>;
 };
 
-void Liste::ajouter(const std::string &s) {
-    Element * elt = new Element(s);
+template<typename T>
+void Liste<T>::ajouter(const T &s) {
+    Element<T> *elt = new Element<T>(s);
 
     elt->suivant = nullptr;
     elt->precedent = this->dernier;
 
-    if (this->premier == nullptr)
-    {
+    if (this->premier == nullptr) {
         this->premier = this->dernier = elt;
-    }
-    else
+    } else
         this->dernier->suivant = elt;
 
     this->dernier = elt;
 
 }
 
-void Liste::inserer(Iterateur &pos, const std::string &s) {
-    Element * elt = new Element(s);
+template<typename T>
+void Liste<T>::inserer(Iterateur<T> &pos, const T &s) {
+    Element<T> *elt = new Element<T>(s);
 
     elt->suivant = pos.position;
 
     pos.precedent();
 
-    if (pos.position != nullptr)
-    {
+    if (pos.position != nullptr) {
         elt->precedent = pos.position;
         elt->precedent->suivant = elt;
         elt->suivant->precedent = elt;
-    }
-    else
-    {
+    } else {
         this->premier = elt;
     }
 }
 
-void Liste::supprimer(Iterateur &pos) {
+template<typename T>
+void Liste<T>::supprimer(Iterateur<T> &pos) {
 
-    if (pos.position != nullptr )
-    {
-        if (pos.position->precedent == nullptr)
-        {
+    if (pos.position != nullptr) {
+        if (pos.position->precedent == nullptr) {
             pos.suivant();
             pos.position->precedent = nullptr;
             this->premier = pos.position;
-        }
-        else if(pos.position->suivant == nullptr)
-        {
+        } else if (pos.position->suivant == nullptr) {
             pos.precedent();
             pos.position->suivant = nullptr;
             this->dernier = pos.position;
-        }
-        else if(pos.position->suivant == nullptr && pos.position->precedent == nullptr)
+        } else if (pos.position->suivant == nullptr && pos.position->precedent == nullptr)
             this->premier = this->dernier = nullptr;
-        else
-        {
+        else {
             pos.position->suivant->precedent = pos.position->precedent;
             pos.position->precedent->suivant = pos.position->suivant;
         }
@@ -81,9 +75,9 @@ void Liste::supprimer(Iterateur &pos) {
 }
 
 // Préfixe
-Iterateur & Iterateur::operator++(){
-    if (this->position->suivant == nullptr )
-    {
+template<typename T>
+Iterateur<T> &Iterateur<T>::operator++() {
+    if (this->position->suivant == nullptr) {
         this->position = this->dernier;
     }
     position = position->suivant;
@@ -92,9 +86,9 @@ Iterateur & Iterateur::operator++(){
 }
 
 // Suffixe
-Iterateur & Iterateur::operator++(int) {
-    if (this->position->suivant == nullptr )
-    {
+template<typename T>
+Iterateur<T> &Iterateur<T>::operator++(int) {
+    if (this->position->suivant == nullptr) {
         this->position = this->dernier;
     }
     position = position->suivant;
@@ -102,56 +96,57 @@ Iterateur & Iterateur::operator++(int) {
     return *this;
 }
 
-Element::Element(const string& s) {
-   valeur = s;
-   precedent = suivant = NULL;
+template<typename T>
+Element<T>::Element(const T &s) {
+    valeur = s;
+    precedent = suivant = NULL;
 }
 
-
-Iterateur::Iterateur() {
-   position = dernier = NULL;
+template<typename T>
+Iterateur<T>::Iterateur() {
+    position = dernier = NULL;
 }
 
-
-string& Iterateur::get() const {
-   return position->valeur;
+template<typename T>
+T &Iterateur<T>::get() const {
+    return position->valeur;
 }
 
-
-void Iterateur::suivant() {
-   position = position->suivant;
+template<typename T>
+void Iterateur<T>::suivant() {
+    position = position->suivant;
 }
 
-
-void Iterateur::precedent() {
-   if (position == NULL) // fin de la liste
-      position = dernier;
-   else
-      position = position->precedent;
+template<typename T>
+void Iterateur<T>::precedent() {
+    if (position == NULL) // fin de la liste
+        position = dernier;
+    else
+        position = position->precedent;
 }
 
-
-bool Iterateur::egal(const Iterateur& b) const {
-   return position == b.position;
+template<typename T>
+bool Iterateur<T>::egal(const Iterateur &b) const {
+    return position == b.position;
 }
 
-
-Liste::Liste() {
-   premier = dernier = NULL;
+template<typename T>
+Liste<T>::Liste() {
+    premier = dernier = NULL;
 }
 
-
-Iterateur Liste::debut() const {
-   Iterateur it;
-   it.position = premier;
-   it.dernier = dernier;
-   return it;
+template<typename T>
+Iterateur<T> Liste<T>::debut() const {
+    Iterateur<T> it;
+    it.position = premier;
+    it.dernier = dernier;
+    return it;
 }
 
-
-Iterateur Liste::fin() const {
-   Iterateur it;
-   it.position = NULL;
-   it.dernier = dernier;
-   return it;
+template<typename T>
+Iterateur<T> Liste<T>::fin() const {
+    Iterateur<T> it;
+    it.position = NULL;
+    it.dernier = dernier;
+    return it;
 }
