@@ -3,4 +3,4 @@ project(ListeChainee)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(ListeChainee main.cpp liste.cc)
+add_executable(ListeChainee liste.cc test_liste_generique.cpp)
