@@ -16,6 +16,20 @@ public:
     // constructeur
     Liste<T>();
 
+    Liste(const Liste<T>&);
+
+    // constructeur par recopie
+    void copy(const Liste<T> &l);
+
+    // libération de la mémoire
+    void free();
+
+    // destructeur
+    ~Liste();
+
+    // Operateur d'affectation
+    Liste<T> & operator=(const Liste<T> & l);
+
     // ajouter s a la fin de la liste
     void ajouter(const T &s);
 
@@ -55,9 +69,18 @@ public:
     // compare deux iterateurs
     bool egal(const Iterateur<T> &b) const;
 
-    Iterateur<T> &operator++();
+    bool operator==(const Iterateur<T> &b) const;
+    bool operator!=(const Iterateur<T> &b) const;
 
+
+    // Surcharges d'opérateurs
+    T&  operator*() const;
+
+    Iterateur<T> &operator++();
     Iterateur<T> &operator++(int);
+
+    Iterateur<T> &operator--();
+    Iterateur<T> &operator--(int);
 
 private:
     // pointeur vers l'element courant

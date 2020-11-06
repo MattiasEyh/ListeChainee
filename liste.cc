@@ -21,6 +21,46 @@ private:
 };
 
 template<typename T>
+void Liste<T>::free() {
+    delete premier;
+    delete dernier;
+}
+
+template<typename T>
+void Liste<T>::copy(const Liste<T> &l) {
+    premier = dernier = NULL;
+    Iterateur<T> it;
+    it = l.debut();
+    while (it.position->suivant != NULL)
+    {
+        ajouter(*it);
+        it++;
+    }
+
+    ajouter(*it++);
+}
+
+template<typename T>
+Liste<T>::Liste(const Liste<T> &l) {
+    copy(l);
+}
+
+template<typename T>
+Liste<T>::~Liste() {
+    free();
+}
+
+template<typename T>
+Liste<T> & Liste<T>::operator=(const Liste<T> &l) {
+    if (this != &l){
+        free();
+        copy(l);
+    }
+
+    return *this;
+}
+
+template<typename T>
 void Liste<T>::ajouter(const T &s) {
     Element<T> *elt = new Element<T>(s);
 
@@ -74,24 +114,61 @@ void Liste<T>::supprimer(Iterateur<T> &pos) {
     }
 }
 
+template<typename T>
+bool Iterateur<T>::operator==(const Iterateur<T> &b) const {
+    return position == b.position;
+}
+
+template<typename T>
+bool Iterateur<T>::operator!=(const Iterateur<T> &b) const {
+    return position != b.position;
+}
+
+template<typename T>
+T& Iterateur<T>::operator*() const {
+    return this->position->valeur;
+}
+
+/**
+ * Operateur ++ (pour remplacer le suivant() )
+ * @return
+ */
 // Préfixe
 template<typename T>
-Iterateur<T> &Iterateur<T>::operator++() {
-    if (this->position->suivant == nullptr) {
-        this->position = this->dernier;
-    }
-    position = position->suivant;
+Iterateur<T> & Iterateur<T>::operator++(){
+    if (this->position->suivant != NULL )
+        position = position->suivant;
 
     return *this;
 }
 
 // Suffixe
 template<typename T>
-Iterateur<T> &Iterateur<T>::operator++(int) {
-    if (this->position->suivant == nullptr) {
-        this->position = this->dernier;
-    }
-    position = position->suivant;
+Iterateur<T> & Iterateur<T>::operator++(int) {
+    if (this->position->suivant != NULL )
+        position = position->suivant;
+
+    return *this;
+}
+
+/**
+ * Operateur -- (pour remplacer le suivant() )
+ * @return
+ */
+// Préfixe
+template<typename T>
+Iterateur<T> & Iterateur<T>::operator--(){
+    if (this->position->precedent  != NULL) // debut de la liste
+        this->position = this->position->precedent;
+
+    return *this;
+}
+
+// Suffixe
+template<typename T>
+Iterateur<T> & Iterateur<T>::operator--(int) {
+    if (this->position->precedent  != NULL) // debut de la liste
+        this->position = this->position->precedent;
 
     return *this;
 }
@@ -99,12 +176,12 @@ Iterateur<T> &Iterateur<T>::operator++(int) {
 template<typename T>
 Element<T>::Element(const T &s) {
     valeur = s;
-    precedent = suivant = NULL;
+    precedent = suivant = nullptr;
 }
 
 template<typename T>
 Iterateur<T>::Iterateur() {
-    position = dernier = NULL;
+    position = dernier = nullptr;
 }
 
 template<typename T>
@@ -119,7 +196,7 @@ void Iterateur<T>::suivant() {
 
 template<typename T>
 void Iterateur<T>::precedent() {
-    if (position == NULL) // fin de la liste
+    if (position == nullptr) // fin de la liste
         position = dernier;
     else
         position = position->precedent;
@@ -132,7 +209,7 @@ bool Iterateur<T>::egal(const Iterateur &b) const {
 
 template<typename T>
 Liste<T>::Liste() {
-    premier = dernier = NULL;
+    premier = dernier = nullptr;
 }
 
 template<typename T>
@@ -146,7 +223,7 @@ Iterateur<T> Liste<T>::debut() const {
 template<typename T>
 Iterateur<T> Liste<T>::fin() const {
     Iterateur<T> it;
-    it.position = NULL;
+    it.position = dernier;
     it.dernier = dernier;
     return it;
 }

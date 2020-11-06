@@ -7,7 +7,7 @@
 using namespace std;
 
 int main() {
-    /*list<string> personnel;
+    list<string> personnel;
 
     // ajouter 4 elements
     personnel.push_back("Baleze Bruno");
@@ -27,7 +27,7 @@ int main() {
 
     // afficher tous les elements
     for (pos = personnel.begin(); pos != personnel.end(); pos++)
-        cout << *pos << endl;*/
+        cout << *pos << endl;
 
     return 0;
 }
