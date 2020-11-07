@@ -1,23 +1,46 @@
+/**
+ * \file liste.cc
+ * \brief Classe liste
+ * \author Mattias Eyherabide
+ * \version 2.0
+ * \date 6 novembre 2020
+ *
+ * Permet de créer toutes les méthodes et classes pour
+ * les classes Element, Iterateur et liste.
+ */
+
+
 #include "liste.h"
 
 using namespace std;
 
+/*!
+ * \class Element
+ * \brief classe pour les éléments de la liste
+ * @tparam T
+ *
+ * La classe gere les éléments contenus dans la
+ * liste chaînée. Le type est générique.
+ */
 template<typename T>
 class Element {
 public:
-    // constructeur
+    /*!
+    *  \brief Constructeur
+    *  \param valeure générique à insérer dans l'élément.
+    *  Constructeur de la classe Element
+    */
     Element<T>(const T &s);
 
 private:
-    T valeur;
+    T valeur; /*!< Valeur de l'élément courant de la liste */
 
-    // pointeurs vers les voisins
-    Element<T> *precedent;
-    Element<T> *suivant;
+    Element<T> *precedent; /*!< Pointeur vers le voisin précédent*/
+    Element<T> *suivant;  /*!< Pointeur vers le voisin suivant */
 
-    friend class Liste<T>;
+    friend class Liste<T>; /*!< Classe amie de Liste<T> */
 
-    friend class Iterateur<T>;
+    friend class Iterateur<T>; /*!< Classe amie de Iterateur<T> */
 };
 
 template<typename T>

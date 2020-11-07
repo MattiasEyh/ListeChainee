@@ -41,7 +41,7 @@ class Iterateur;
 
 /*!
  * \class Liste
- * \brief classe de la liste
+ * \brief Header de la classe de la liste
  * @tparam T
  *
  * La classe gere la totalité du fonctionnement de la liste.
@@ -59,7 +59,7 @@ public:
      * \brief Constructeur par recopie
      * Constructeur par recopie de la classe Liste.
      */
-    Liste(const Liste<T>&);
+    Liste(const Liste<T> &);
 
     /*!
      * \brief Destructeur
@@ -87,7 +87,7 @@ public:
      * @param l
      * @return
      */
-    Liste<T> & operator=(const Liste<T> & l);
+    Liste<T> &operator=(const Liste<T> &l);
 
     /*!
      * \brief Ajout d'une valeur s
@@ -193,7 +193,7 @@ public:
      *  Méthode pour retourner la valeur de l'élément pointé par l'itérateur.
      * @return La valeur de l'élement pointé par l'itérateur courant.
      */
-    T&  operator*() const;
+    T &operator*() const;
 
     /*!
     *  \brief Incrémentation de l'itérateur dans la liste (Surcharge d'opérateur postfixe)
