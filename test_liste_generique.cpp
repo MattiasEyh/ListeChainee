@@ -104,7 +104,7 @@ int main() {
      */
     cout << endl << "\t\nInsertion (STRING)\n----------------" << endl;
 
-    cout << "Ajout d'un élément 'Mattias Eyherabide' :\n" << endl;
+    cout << "Insersion d'un élément 'Mattias Eyherabide' :\n" << endl;
 
     posString = lstString.debut();
 
@@ -112,13 +112,14 @@ int main() {
 
     lstString.inserer(posString, "Mattias Eyherabide");
 
+
     for (posString = lstString.debut(); !posString.egal(lstString.fin()); posString.suivant()) {
         cout << posString.get() << endl;
     }
 
 
-    cout << endl << "\t\nSuppression (STRING)\n----------------" << endl;
 
+    cout << endl << "\t\nSuppression (STRING)\n----------------" << endl;
 
 
     posString = lstString.debut();
@@ -267,17 +268,80 @@ int main() {
             "| Opérateurs de surcharge :                           |\n"
             "- - - - - - - - - - - - - - - - - - - - - - - - - - - -\n" << endl;
 
-    cout << "Operateur ++ : décaller de deux dans la liste" << endl;
+    for (posString = lstString.debut(); !posString.egal(lstString.fin()); posString.suivant()) {
+        cout << "-" << posString.get() << endl;
+    }
+    cout << "------------" << endl;
+
+    cout << "Operateur ++ : décaller de deux dans la liste en utilisant la méthode préfixe puis suffixe (pos de départ au premier élément)" << endl;
+    cout << "Résultat attendu après deux incrémentations : Doue Damie" << endl;
 
     posString = lstString.debut();
 
-    cout << "Préfix : "  << posString++.get() << endl;
+    cout << "\nPréfix : "  << posString++.get() << endl;
     
     ++posString;
+    cout << "Suffixe : " << posString.get() << "\n" << endl;
+
+    if (posString.get() == "Doue Damien") cout << "Test réussi"; else cout << "erreur";
+
+    cout << "\n\nOperateur -- : décaller de deux dans la liste de la même manière (pos de départ au dernier élément)" << endl;
+    cout << "Résultat attendu après deux incrémentations : Baleze Bruno" << endl;
+
+    cout << "\nPréfix : "  << posString--.get() << endl;
+
+    --posString;
     cout << "Suffixe : " << posString.get() << endl;
+
+    if (posString.get() == "Baleze Bruno") cout << "\nTest réussi"; else cout << "\nerreur";
+
+    cout << "\n\n------------------------" << endl;
+    cout << "Operateurs d'égalitée " << endl;
+    cout << "------------------------" << endl;
+
+    Iterateur<string> posStringCompare = lstString.debut();
+
+    posString = lstString.debut();
+
+    bool boolCompare = posString == posStringCompare;
+
+    cout << "\nTest si la position des deux liste est égal (resultat attendu : vrai)" << endl;
+    cout << boolCompare << endl;
+
+    cout << "\nIncrémentation de 1 et vérification de l'égalité (résultat attendu : faux)" << endl;
+    posString++;
+    boolCompare = posString == posStringCompare;
+    cout << boolCompare << endl;
+
+
+    cout << "\nINVERSE : opérateur de différence" << endl;
+    posString = lstString.debut();
+    boolCompare = posString != posStringCompare;
+
+    cout << "\nTest si la position des deux liste est différent (resultat attendu : faux)" << endl;
+    cout << boolCompare << endl;
+
+    cout << "\nIncrémentation de 1 et vérification de l'égalité (résultat attendu : vrai)" << endl;
+    posString++;
+    boolCompare = posString != posStringCompare;
+    cout << boolCompare << endl;
+
+    cout << "\nTest de comparaison sur deux listes vides" << endl;
+
+    Liste<string> listeVide1;
+    Iterateur<string> iteVide1 = listeVide1.debut();
+    Iterateur<string> iteVide2 = listeVide1.debut();
+
+    boolCompare = iteVide1 == iteVide2;
+    cout << boolCompare << endl;
 
 
     cout << endl << "\t\nBornes : \n----------------" << endl;
+
+    for (posString = lstString.debut(); !posString.egal(lstString.fin()); posString.suivant()) {
+        cout << "-" << posString.get() << endl;
+    }
+    cout << "------------" << endl;
 
     posString = lstString.debut();
 
