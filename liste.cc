@@ -43,12 +43,23 @@ private:
     friend class Iterateur<T>; /*!< Classe amie de Iterateur<T> */
 };
 
+/*!
+ * \brief Libération de la mémoire
+ * Permet de libérer la mémoire dans une liste.
+ * Est utilisé dans le déstructeur.
+ */
 template<typename T>
 void Liste<T>::free() {
     delete premier;
     delete dernier;
 }
 
+/*!
+ * \brief Copie d'une liste
+ * @param l
+ * Permet la copie d'une liste, est utilisé
+ * dans le constructeur par recopie
+ */
 template<typename T>
 void Liste<T>::copy(const Liste<T> &l) {
     premier = dernier = NULL;
@@ -63,16 +74,29 @@ void Liste<T>::copy(const Liste<T> &l) {
     ajouter(*it++);
 }
 
+/*!
+ * \brief Constructeur par recopie
+ * Constructeur par recopie de la classe Liste.
+ */
 template<typename T>
 Liste<T>::Liste(const Liste<T> &l) {
     copy(l);
 }
 
+/*!
+ * \brief Destructeur
+ * Destructeur de la classe Liste.
+ */
 template<typename T>
 Liste<T>::~Liste() {
     free();
 }
 
+/*!
+ * \brief Opérateur d'affectation
+ * @param l
+ * @return
+ */
 template<typename T>
 Liste<T> & Liste<T>::operator=(const Liste<T> &l) {
     if (this != &l){
@@ -83,6 +107,12 @@ Liste<T> & Liste<T>::operator=(const Liste<T> &l) {
     return *this;
 }
 
+/*!
+ * \brief Ajout d'une valeur s
+ * @param l
+ * @return
+ * Ajout une valeur générique dans un élément
+ */
 template<typename T>
 void Liste<T>::ajouter(const T &s) {
     Element<T> *elt = new Element<T>(s);
@@ -99,6 +129,12 @@ void Liste<T>::ajouter(const T &s) {
 
 }
 
+/*!
+ * \brief Insértion d'une valeur s
+ * @param l
+ * @return
+ * Ajout une valeur générique dans un élément par insérsion
+ */
 template<typename T>
 void Liste<T>::inserer(Iterateur<T> &pos, const T &s) {
     Element<T> *elt = new Element<T>(s);
@@ -116,6 +152,12 @@ void Liste<T>::inserer(Iterateur<T> &pos, const T &s) {
     }
 }
 
+/*!
+* \brief Supression d'un élément
+* @param l
+* @return
+* Supression d'un élément dans la liste
+*/
 template<typename T>
 void Liste<T>::supprimer(Iterateur<T> &pos) {
 
@@ -137,6 +179,13 @@ void Liste<T>::supprimer(Iterateur<T> &pos) {
     }
 }
 
+/*!
+ * \brief Comparateur (surcharge d'opérateur)
+ * @param b
+ * @return Retourne si l'itérateur est égal au courant.
+ * Permet de comparer un itérateur avec l'itérateur courant
+ * en renvoyant un booléen.
+ */
 template<typename T>
 bool Iterateur<T>::operator==(const Iterateur<T> &b) const {
     return position == b.position;
@@ -147,16 +196,24 @@ bool Iterateur<T>::operator!=(const Iterateur<T> &b) const {
     return position != b.position;
 }
 
+/*!
+ * \brief Comparateur (surcharge d'opérateur)
+ * @param b
+ * @return Retourne si l'itérateur est différent au courant.
+ * Permet de comparer un itérateur avec l'itérateur courant
+ * en renvoyant un booléen.
+ */
 template<typename T>
 T& Iterateur<T>::operator*() const {
     return this->position->valeur;
 }
 
-/**
- * Operateur ++ (pour remplacer le suivant() )
- * @return
- */
-// Préfixe
+/*!
+*  \brief Incrémentation de l'itérateur dans la liste (Surcharge d'opérateur prefixe)
+*  \return Nouvel itérateur courant.
+*  Méthode pour incrémenter l'itérateur dans la liste
+*/
+
 template<typename T>
 Iterateur<T> & Iterateur<T>::operator++(){
     if (this->position->suivant != NULL )
@@ -165,7 +222,11 @@ Iterateur<T> & Iterateur<T>::operator++(){
     return *this;
 }
 
-// Suffixe
+/*!
+*  \brief Incrémentation de l'itérateur dans la liste (Surcharge d'opérateur suffixe)
+*  \return Nouvel itérateur courant.
+*  Méthode pour incrémenter l'itérateur dans la liste
+*/
 template<typename T>
 Iterateur<T> & Iterateur<T>::operator++(int) {
     if (this->position->suivant != NULL )
@@ -174,11 +235,11 @@ Iterateur<T> & Iterateur<T>::operator++(int) {
     return *this;
 }
 
-/**
- * Operateur -- (pour remplacer le suivant() )
- * @return
- */
-// Préfixe
+/*!
+*  \brief Décrémentation de l'itérateur dans la liste (Surcharge d'opérateur préfixe)
+*  \return Nouvel itérateur courant.
+*  Méthode pour décrémenter l'itérateur dans la liste
+*/
 template<typename T>
 Iterateur<T> & Iterateur<T>::operator--(){
     if (this->position->precedent  != NULL) // debut de la liste
@@ -187,7 +248,11 @@ Iterateur<T> & Iterateur<T>::operator--(){
     return *this;
 }
 
-// Suffixe
+/*!
+*  \brief Décrémentation de l'itérateur dans la liste (Surcharge d'opérateur postfixe)
+*  \return Nouvel itérateur courant.
+*  Méthode pour décrémenter l'itérateur dans la liste
+*/
 template<typename T>
 Iterateur<T> & Iterateur<T>::operator--(int) {
     if (this->position->precedent  != NULL) // debut de la liste
@@ -202,21 +267,37 @@ Element<T>::Element(const T &s) {
     precedent = suivant = nullptr;
 }
 
+/*!
+*  \brief Constructeur
+*  Constructeur de la classe Itérateur
+*/
 template<typename T>
 Iterateur<T>::Iterateur() {
     position = dernier = nullptr;
 }
 
+/*!
+*  \brief Getter
+*  Méthode pour retourner la valeur de l'élément pointé par l'itérateur.
+*/
 template<typename T>
 T &Iterateur<T>::get() const {
     return position->valeur;
 }
 
+/*!
+*  \brief Incrémentation de l'itérateur dans la liste
+*  Méthode pour incrémenter l'itérateur dans la liste
+*/
 template<typename T>
 void Iterateur<T>::suivant() {
     position = position->suivant;
 }
 
+/*!
+*  \brief Décrémentation de l'itérateur dans la liste
+*  Méthode pour décrémenter l'itérateur dans la liste
+*/
 template<typename T>
 void Iterateur<T>::precedent() {
     if (position == nullptr) // fin de la liste
@@ -225,6 +306,13 @@ void Iterateur<T>::precedent() {
         position = position->precedent;
 }
 
+/*!
+ * \brief Comparateur
+ * @param b
+ * @return Retourne si l'itérateur est égal au courant.
+ * Permet de comparer un itérateur avec l'itérateur courant
+ * en renvoyant un booléen.
+ */
 template<typename T>
 bool Iterateur<T>::egal(const Iterateur &b) const {
     return position == b.position;
@@ -235,6 +323,11 @@ Liste<T>::Liste() {
     premier = dernier = nullptr;
 }
 
+/*!
+ * \brief Itérateur du premier élément
+ * @return
+ * Itérateur pointant sur le premier élément de la liste.
+ */
 template<typename T>
 Iterateur<T> Liste<T>::debut() const {
     Iterateur<T> it;
@@ -243,6 +336,11 @@ Iterateur<T> Liste<T>::debut() const {
     return it;
 }
 
+/*!
+ * \brief Itérateur du dernier élément
+ * @return
+ * Itérateur pointant sur le dernier élément de la liste +1.
+ */
 template<typename T>
 Iterateur<T> Liste<T>::fin() const {
     Iterateur<T> it;
